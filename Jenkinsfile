@@ -1,18 +1,19 @@
 pipeline {
     agent any
+	 tools {nodejs "node"}
     environment {
-        //be sure to replace "felipelujan" with your own Docker Hub username
-        //changesss
-        DOCKER_IMAGE_NAME = "felipelujan/gradle-test"
+       
+        DOCKER_IMAGE_NAME = "ahmedderaz/nodejs-test"
     }
     stages {
          stage('Build') {	
              steps {	
-                echo 'Running build automation'	
-                sh 'chmod +x ./gradlew'	
-                sh './gradlew build --no-daemon'	
+             sh 'npm config ls'	
             }	
-        }
+                    }
+		}
+		       
+		
        
         stage('Build Docker Image') {
             when {
@@ -45,7 +46,7 @@ pipeline {
                 milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
-                    configs: 'k8s_svc_deploy.yaml',
+                    configs: 'deploy.yaml',
                     enableConfigSubstitution: true
                 )
             }

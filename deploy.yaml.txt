@@ -1,16 +1,36 @@
-apiVersion appsv1
-kind Deployment
-metadata
-  name hello-world-deployment
-spec
-  replicas 2
-  template
-    metadata
-      labels # labels to selectidentify the deployment
-        app hello-world  
-    spec     # pod spec                  
-      containers 
-      - name hello-world 
-        image hello-world-imagev1 # image we pushed
-        ports
-        - containerPort 3000
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: aly
+  name: aly
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aly
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: aly
+    spec:
+      containers:
+      - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        name: node
+      ports:
+      - containerPort 3000
+---		
+apiVersion: v1
+kind: Service
+metadata:
+  name: aly
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: aly
