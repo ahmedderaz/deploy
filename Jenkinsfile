@@ -11,7 +11,7 @@ pipeline {
              sh 'npm config ls'	
             }	
                     }
-		}
+		
 		       
 		
        
