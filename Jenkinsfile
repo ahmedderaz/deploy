@@ -39,6 +39,7 @@ pipeline {
                 }
             }
         }
+		/**
         stage('DeployToProduction') {
             when {
                 branch 'master'
@@ -52,5 +53,9 @@ pipeline {
                 )
             }
         }
+		**/
+		stage('Deploy to K8S'){
+		sh 'kubectl apply -f deploy.yml'
+		}
     }
 }
