@@ -1,13 +1,23 @@
-apiVersion: app/v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: helloworld-nodejs
+  creationTimestamp: null
+  labels:
+    app: sample
+  name: sample
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample
+  strategy: {}
   template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: sample
     spec:
-      replicas: 2
       containers:
-        - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
-          env:
-            - name: TARGET
-              value: "Node.js Sample v1"
+      - image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        name: node
+        resources: {}
