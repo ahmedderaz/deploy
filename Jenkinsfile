@@ -3,7 +3,7 @@ pipeline {
 	
     environment {
        
-        DOCKER_IMAGE_NAME = "ahmedderaz/nodejs-test"
+        DOCKER_IMAGE_NAME = "13121988/nodejs-test"
     }
     stages {
          stage('Build') {	
@@ -30,9 +30,8 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-				  sh 'docker logout'
-                    docker.withRegistry('docker.io', 'docker_hub_login') {
+                script { 
+                   docker.withRegistry('docker.io', 'docker_hub_login') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
