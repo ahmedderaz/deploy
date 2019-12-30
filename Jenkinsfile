@@ -1,6 +1,6 @@
 pipeline {
     agent any
-	 tools {nodejs "node"}
+	
     environment {
        
         DOCKER_IMAGE_NAME = "ahmedderaz/nodejs-test"
@@ -8,7 +8,7 @@ pipeline {
     stages {
          stage('Build') {	
              steps {	
-             sh 'npm config ls'	
+             sh 'echo yes'	
             }	
                     }
 		
