@@ -45,7 +45,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                milestone(1)
+               
                 kubernetesDeploy(
                     configs: 'deploy.yml',
 					kubeconfigId: 'kubeconfig',
