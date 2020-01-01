@@ -11,8 +11,11 @@ pipeline {
              sh 'echo yes'	
             }	
                     }
-   
-		
+    stage('SonarQube Analysis') {
+        sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqubescanner/bin/sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=aly -Dsonar.projectVersion=1.0 -Dsonar.projectKey=aly:app -Dsonar.sources=. -Dsonar.projectBaseDir=/home/jenkins/workspace/sonarqube_test_pipeline"
+
+
+}
    
         stage('Build Docker Image') {
             when {
