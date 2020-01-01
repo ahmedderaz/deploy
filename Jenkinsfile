@@ -57,7 +57,7 @@ pipeline {
 		stage('Deploy to K8S'){
 		steps {
 		sh 'echo $PWD'
-		sh 'kubectl apply -f deploy.yml'
+		sh 'kubectl apply -f deploy.yml --validate=false'
 	
 		}
     }
