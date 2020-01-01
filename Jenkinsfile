@@ -20,9 +20,9 @@ stage('Sonarqube') {
             sh "${scannerHome}/bin/sonar-scanner"
         }
 		}
-		       
+		 }      
 		
-       
+   
         stage('Build Docker Image') {
             when {
                 branch 'master'
@@ -70,4 +70,3 @@ stage('Sonarqube') {
 		}
     }
 	}
-}
