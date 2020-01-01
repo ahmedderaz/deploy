@@ -3,7 +3,7 @@ pipeline {
 	
     environment {
        
-        DOCKER_IMAGE_NAME = "13121988/nodejs-test"
+        DOCKER_IMAGE_NAME = "13121988/nginx-test"
     }
     stages {
          stage('Build') {	
