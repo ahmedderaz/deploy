@@ -23,6 +23,7 @@ swapoff -a
 Give Unique hostnames on both nodes
 ##Initialize Kubernetes on the master node
 sudo kubeadm init --api-advertise-address=192.168.56.108 --pod-network-cidr=192.168.0.0/16
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ##Switch user
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
