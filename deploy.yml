@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx0-deployment
+  name: ahmed-deraz
   labels:
-    app: nginx0-deployment
+    app: ahmed-deraz
 spec:
   replicas: 2
   selector:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: $DOCKER_IMAGE_NAME:$BUILD_NUMBER
+        image: $DOCKER_IMAGE_NAME
         ports:
         - containerPort: 80
             
