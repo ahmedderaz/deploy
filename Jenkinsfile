@@ -19,7 +19,7 @@ stage('SonarQube analysis') {
         withSonarQubeEnv('SonarQube') {
             sh """
    ${scannerHome}/bin/sonar-scanner \
-   -Dsonar.projectKey=aly:app \
+   -Dsonar.projectKey=aly \
    -Dsonar.sources=. \
 """
         }
