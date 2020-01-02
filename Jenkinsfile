@@ -11,18 +11,16 @@ pipeline {
              sh 'echo yes'	
             }	
                     }
-stage('Sonarqube') {
-    environment {
-        scannerHome = tool 'SonarQubeScanner'
-    }
-    steps {
-        withSonarQubeEnv('sonarqube') {
-            sh "${scannerHome}/bin/sonar-scanner"
-        }
-        timeout(time: 10, unit: 'MINUTES') {
-            waitForQualityGate abortPipeline: true
-        }
-    }
+stage("SonarQube Analysis") {
+      
+      steps {
+        script {
+            def scannerHome = tool 'SonarQube Scanner ';
+            withSonarQubeEnv("sonar") {
+              sh "${scannerHome}/bin/sonar-scanner"
+            }
+        } 
+}
 }
         stage('Build Docker Image') {
             when {
