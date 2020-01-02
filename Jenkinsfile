@@ -17,7 +17,7 @@ stage("SonarQube Analysis") {
         script {
             def scannerHome = tool 'SonarQube Scanner';
             withSonarQubeEnv('sonar') {
-              sh "${scannerHome}/bin/sonar-scanner"
+              sh "${scannerHome}/bin/sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=aly -Dsonar.projectVersion=1.0 -Dsonar.projectKey=aly:app -Dsonar.sources=."
             }
         } 
 }
