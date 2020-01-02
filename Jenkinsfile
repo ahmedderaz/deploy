@@ -11,11 +11,19 @@ pipeline {
              sh 'echo yes'	
             }	
                     }
-    stage('SonarQube Analysis') {
-	steps {
-        sh "/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqubescanner/bin/sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=aly -Dsonar.projectVersion=1.0 -Dsonar.projectKey=aly:app -Dsonar.sources=. -Dsonar.projectBaseDir=/var/lib/jenkins/workspace/deploy_master"
-}
-
+stage('SonarQube analysis') {
+    steps{
+        script {
+            scannerHome = tool 'SonarQube';
+        }
+        withSonarQubeEnv('SonarQube') {
+            sh """
+   ${scannerHome}/bin/sonar-scanner \
+   -Dsonar.projectKey=aly:app \
+   -Dsonar.sources=. \
+"""
+        }
+    }
 }
    
         stage('Build Docker Image') {
