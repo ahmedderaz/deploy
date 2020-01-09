@@ -1,0 +1,227 @@
+Branch indexing
+Connecting to https://api.github.com using admin/****** (GitHub Access Token)
+Obtained Jenkinsfile from dc0343c64ba4fb4ed7abe7065420719c6e9523b9
+Running in Durability level: MAX_SURVIVABILITY
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/deploy_master
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+using credential github
+ > git rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/ahmedderaz/deploy.git # timeout=10
+Cleaning workspace
+ > git rev-parse --verify HEAD # timeout=10
+Resetting working tree
+ > git reset --hard # timeout=10
+ > git clean -fdx # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/ahmedderaz/deploy.git
+ > git --version # timeout=10
+using GIT_ASKPASS to set credentials GitHub Access Token
+ > git fetch --no-tags --progress -- https://github.com/ahmedderaz/deploy.git +refs/heads/master:refs/remotes/origin/master # timeout=10
+Checking out Revision dc0343c64ba4fb4ed7abe7065420719c6e9523b9 (master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f dc0343c64ba4fb4ed7abe7065420719c6e9523b9 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master dc0343c64ba4fb4ed7abe7065420719c6e9523b9 # timeout=10
+Commit message: "sonar"
+ > git rev-list --no-walk 8d1c249721d319db950a645aec6bc324d79ec41e # timeout=10
+Cleaning workspace
+ > git rev-parse --verify HEAD # timeout=10
+Resetting working tree
+ > git reset --hard # timeout=10
+ > git clean -fdx # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ echo yes
+yes
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] tool
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: sonar
+[Pipeline] {
+[Pipeline] sh
++ /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQube_Scanner/bin/sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.projectName=aly -Dsonar.projectVersion=1.0 -Dsonar.projectKey=aly:app -Dsonar.sources=.
+INFO: Scanner configuration file: /var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQube_Scanner/conf/sonar-scanner.properties
+INFO: Project root configuration file: /var/lib/jenkins/workspace/deploy_master/sonar-project.properties
+INFO: SonarQube Scanner 4.0.0.1744
+INFO: Java 1.8.0_232 Private Build (64-bit)
+INFO: Linux 5.0.0-1027-azure amd64
+INFO: User cache: /var/lib/jenkins/.sonar/cache
+INFO: SonarQube server 7.9.2
+INFO: Default locale: "en", source code encoding: "UTF-8"
+WARN: SonarScanner will require Java 11 to run starting in SonarQube 8.x
+INFO: Load global settings
+INFO: Load global settings (done) | time=103ms
+INFO: Server id: BF41A1F2-AW9i-TgYF3kqyXpBwHOc
+INFO: User cache: /var/lib/jenkins/.sonar/cache
+INFO: Load/download plugins
+INFO: Load plugins index
+INFO: Load plugins index (done) | time=75ms
+INFO: Load/download plugins (done) | time=119ms
+INFO: Process project properties
+INFO: Execute project builders
+INFO: Execute project builders (done) | time=10ms
+INFO: Project key: aly:app
+INFO: Base dir: /var/lib/jenkins/workspace/deploy_master
+INFO: Working dir: /var/lib/jenkins/workspace/deploy_master/.scannerwork
+INFO: Load project settings for component key: 'aly:app'
+INFO: Load project settings for component key: 'aly:app' (done) | time=23ms
+INFO: Load quality profiles
+INFO: Load quality profiles (done) | time=152ms
+INFO: Detected Jenkins
+INFO: Load active rules
+INFO: Load active rules (done) | time=4771ms
+INFO: Indexing files...
+INFO: Project configuration:
+INFO: 8 files indexed
+INFO: 0 files ignored because of scm ignore settings
+INFO: Quality profile for web: Sonar way
+INFO: ------------- Run sensors on module aly
+INFO: Load metrics repository
+INFO: Load metrics repository (done) | time=116ms
+INFO: Sensor JaCoCo XML Report Importer [jacoco]
+INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=5ms
+INFO: Sensor JavaXmlSensor [java]
+INFO: Sensor JavaXmlSensor [java] (done) | time=5ms
+INFO: Sensor HTML [web]
+INFO: Load project repositories
+INFO: Load project repositories (done) | time=29ms
+INFO: Sensor HTML [web] (done) | time=162ms
+INFO: ------------- Run sensors on project
+INFO: Sensor Zero Coverage Sensor
+INFO: Sensor Zero Coverage Sensor (done) | time=0ms
+INFO: 1 file had no CPD blocks
+INFO: Calculating CPD for 0 files
+INFO: CPD calculation finished
+INFO: Analysis report generated in 159ms, dir size=72 KB
+INFO: Analysis report compressed in 20ms, zip size=10 KB
+INFO: Analysis report uploaded in 66ms
+INFO: ANALYSIS SUCCESSFUL, you can browse http://localhost:9000/dashboard?id=aly%3Aapp
+INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+INFO: More about the report processing at http://localhost:9000/api/ce/task?id=AW9ldm5Z2qZjrTTcIPMm
+INFO: Analysis total time: 12.298 s
+INFO: ------------------------------------------------------------------------
+INFO: EXECUTION SUCCESS
+INFO: ------------------------------------------------------------------------
+INFO: Total time: 13.940s
+INFO: Final Memory: 14M/52M
+INFO: ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] sh
++ docker build -t 13121988/nginx .
+Sending build context to Docker daemon  192.5kB
+Step 1/2 : FROM nginx:1.16
+ ---> 64f1f7d81bd8
+Step 2/2 : ADD index.html  /var/www/html
+ ---> Using cache
+ ---> a7b19e3ddd84
+Successfully built a7b19e3ddd84
+Successfully tagged 13121988/nginx:latest
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Docker Image)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withDockerRegistry
+$ docker login -u 13121988 -p ******** https://registry.hub.docker.com
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /var/lib/jenkins/workspace/deploy_master@tmp/70c41028-2a97-4f22-9d2d-0dd7a63521ab/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] sh
++ docker tag 13121988/nginx registry.hub.docker.com/13121988/nginx:32
+[Pipeline] isUnix
+[Pipeline] sh
++ docker push registry.hub.docker.com/13121988/nginx:32
+The push refers to repository [registry.hub.docker.com/13121988/nginx]
+5712f7bc4dff: Preparing
+1e4659645d5f: Preparing
+6a9d675346ca: Preparing
+556c5fb0d91b: Preparing
+556c5fb0d91b: Layer already exists
+6a9d675346ca: Layer already exists
+1e4659645d5f: Layer already exists
+5712f7bc4dff: Layer already exists
+32: digest: sha256:67fab0374ba6ed2cf3e5d581fdec4fb644994624d07f745029b284ecdf01d485 size: 1155
+[Pipeline] isUnix
+[Pipeline] sh
++ docker tag 13121988/nginx registry.hub.docker.com/13121988/nginx:latest
+[Pipeline] isUnix
+[Pipeline] sh
++ docker push registry.hub.docker.com/13121988/nginx:latest
+The push refers to repository [registry.hub.docker.com/13121988/nginx]
+5712f7bc4dff: Preparing
+1e4659645d5f: Preparing
+6a9d675346ca: Preparing
+556c5fb0d91b: Preparing
+5712f7bc4dff: Layer already exists
+1e4659645d5f: Layer already exists
+556c5fb0d91b: Layer already exists
+6a9d675346ca: Layer already exists
+latest: digest: sha256:67fab0374ba6ed2cf3e5d581fdec4fb644994624d07f745029b284ecdf01d485 size: 1155
+[Pipeline] }
+[Pipeline] // withDockerRegistry
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to K8S)
+[Pipeline] sh
++ echo /var/lib/jenkins/workspace/deploy_master
+/var/lib/jenkins/workspace/deploy_master
+[Pipeline] sh
++ kubectl apply -f deploy.yml --validate=false
+deployment.apps/ahmed created
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+
+GitHub has been notified of this commit’s build result
+
+Finished: SUCCESS

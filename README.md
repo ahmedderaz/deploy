@@ -1,7 +1,7 @@
 About this Repo
 This is repo about doing CICD by deploy in k8s by jenkins
 we using nginx as service to deploy
-Steps:-
+#Installation
 install jenkins on server and kubectl
 first we install docker 
 add normal user to docker group
@@ -31,6 +31,28 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ##NOde Run
 kubeadm join 192.168.56.108:6443 --token 06tl4c.oqn35jzecidg0r0m --discovery-token-ca-cert-hash sha256:c40f5fa0aba6ba311efcdb0e8cb637ae0eb8ce27b7a03d47be6d966142f2204c
 ####jenkins process#######
+instal jenkins on other server
+install docker and add jenkins user to docker group
+install kubeadm on same server
+add config file to the jenkins home directory
+change owner file name to jenkins 
+install sonarqube and kubernetes plugins
+####SonarQube#########
+install sonarqube server 
+add sonarqube scanner in jenkins Global tool configuration 
+add sonarqube username and secret "generated on SQ server"
+in configure system add sonarqube server details
+url and the secret key
+#####Pipline steps########
+integrate github with jenkins and add user with password 
+apply github webhook to jenkins
+add docker hub account username and secret key
+write Jenkinsfile and put it in the main project directory
+####check kubernetes master server###
+check the running pods 
+kubectl get pods
+ 
+
 
 
 
