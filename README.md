@@ -48,8 +48,27 @@ $ sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/
 $ kubectl get nodes   
 $ kubectl get pods --all-namespaces
 ```
+### Initialize Jenkins
+```sh
+$ sudo apt update
+$ sudo apt install openjdk-8-jdk
+$ wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+$ sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+$ sudo apt get update
+$ sudo apt install jenkins
+$ sudo chmod 666 /var/run/docker.sock 
+```
+### Initialize Jenkins Plugins
+install required plugins as below
+kubernetes
+sonarqube
+github
+docker
+blue ocean
+### Install sonarqube server on same jenkins server
 
-
-
-
+```sh
+$sudo apt update
+$docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
+```
 
